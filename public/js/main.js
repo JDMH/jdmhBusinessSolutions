@@ -1,5 +1,11 @@
 // Mobile Navigation Toggle
 document.addEventListener('DOMContentLoaded', function() {
+    // Constants
+    const NAVBAR_HEIGHT = 70;
+    const TOAST_SHOW_DELAY = 10;
+    const TOAST_DURATION = 5000;
+    const TOAST_FADE_DURATION = 300;
+
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
 
@@ -24,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
             if (target) {
-                const offsetTop = target.offsetTop - 70;
+                const offsetTop = target.offsetTop - NAVBAR_HEIGHT;
                 window.scrollTo({
                     top: offsetTop,
                     behavior: 'smooth'
@@ -80,13 +86,13 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.appendChild(toast);
         
         // Trigger animation
-        setTimeout(() => toast.classList.add('show'), 10);
+        setTimeout(() => toast.classList.add('show'), TOAST_SHOW_DELAY);
         
-        // Remove after 5 seconds
+        // Remove after specified duration
         setTimeout(() => {
             toast.classList.remove('show');
-            setTimeout(() => toast.remove(), 300);
-        }, 5000);
+            setTimeout(() => toast.remove(), TOAST_FADE_DURATION);
+        }, TOAST_DURATION);
     }
 
     // Add scroll effect to navbar
