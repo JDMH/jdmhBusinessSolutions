@@ -3,20 +3,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
 
-    if (hamburger) {
+    if (hamburger && navMenu) {
         hamburger.addEventListener('click', function() {
             navMenu.classList.toggle('active');
             hamburger.classList.toggle('active');
         });
-    }
 
-    // Close menu when clicking on a link
-    document.querySelectorAll('.nav-menu a').forEach(link => {
-        link.addEventListener('click', function() {
-            navMenu.classList.remove('active');
-            hamburger.classList.remove('active');
+        // Close menu when clicking on a link
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                navMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+            });
         });
-    });
+    }
 
     // Smooth scrolling for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -48,11 +48,45 @@ document.addEventListener('DOMContentLoaded', function() {
             };
 
             // Show success message (in a real app, this would send to a server)
-            alert('Thank you for your message! We will get back to you soon.');
+            showToast('Thank you for your message! We will get back to you soon.', 'success');
             
             // Reset form
             contactForm.reset();
         });
+    }
+
+    // Toast notification function
+    function showToast(message, type = 'success') {
+        // Remove existing toast if any
+        const existingToast = document.querySelector('.toast');
+        if (existingToast) {
+            existingToast.remove();
+        }
+
+        // Create toast element
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        
+        const icon = document.createElement('span');
+        icon.className = 'toast-icon';
+        icon.textContent = type === 'success' ? '✓' : 'ℹ';
+        
+        const messageEl = document.createElement('span');
+        messageEl.className = 'toast-message';
+        messageEl.textContent = message;
+        
+        toast.appendChild(icon);
+        toast.appendChild(messageEl);
+        document.body.appendChild(toast);
+        
+        // Trigger animation
+        setTimeout(() => toast.classList.add('show'), 10);
+        
+        // Remove after 5 seconds
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 300);
+        }, 5000);
     }
 
     // Add scroll effect to navbar
